@@ -1,0 +1,22 @@
+.favorite {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    flex-grow: 1;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    &__title {
+        font-size: 32px;
+        font-weight: 700;
+    }
+    &__main {
+        width: 100%;
+        display: grid;
+        gap: 40px;
+        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    }
+}

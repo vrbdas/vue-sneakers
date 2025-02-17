@@ -1,0 +1,37 @@
+form {
+    display: grid;
+    grid-template-rows: auto;
+    gap: 20px;
+    align-content: start;
+  
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+  
+    fieldset {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    input,
+    textarea,
+    select {
+      outline: none;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #9b9b9b;
+      width: 100%;
+      font-size: 16px;
+    }
+  
+    textarea {
+      resize: none;
+    }
+  }
+  
+  .form-error {
+    font-size: 14px;
+    color: red;
+  }

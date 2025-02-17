@@ -1,0 +1,72 @@
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    opacity: 0.9;
+    border: none;
+    :where(&) {
+        font-size: 16px;
+    }
+    &__rect {
+        border-radius: 18px;
+        background: #8bb43c;
+        color: #fff;
+        height: 55px;
+        font-weight: 600;
+        position: relative;
+        padding: 0 60px;
+    }
+    &__square {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        color: #9B9B9B;
+        font-weight: 700;
+        &_grey {
+            border: 2px solid #9B9B9B;
+        }
+
+        &_green {
+            background-color: #FF8585;
+        }
+    }
+    &:hover {
+        transition: 0.3s ease all;
+        opacity: 1;
+    }
+}
+
+.arrow-sign-right {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    &_left {
+        transform: rotate(180deg);
+    }
+    &::before {
+        content: "";
+        position: absolute;
+        top: 72%;
+        left: 14%;
+        transform: rotate(135deg);
+        width: 12px;
+        border-bottom: 3px solid #9B9B9B;
+        border-radius: 1px;
+    }
+    &::after {
+        content: "";
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        transform: rotate(-135deg);
+        width: 12px;
+        border-bottom: 3px solid #9B9B9B;
+        border-radius: 1px;
+    }
+}
+
+.arrow-sign-left {
+    @extend .arrow-sign-right;
+    transform: rotate(180deg);
+}

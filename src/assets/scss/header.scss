@@ -1,0 +1,56 @@
+.header {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 20px 0;
+    user-select: none;
+    &__wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    &__logo {
+        display: flex;
+        gap: 16px;
+        cursor: pointer;
+        
+        &-img {
+            width: 40px;
+            height: 40px;
+        }
+        &-title {
+            color: #000000;
+            font-size: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        &-text {
+            color: #9B9B9B;
+            font-size: 14px;
+            font-weight: 400;
+        }
+    }
+    &__nav {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        font-weight: 500;
+        &-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #9B9B9B;
+            &-cart-full {
+                color: #000000;
+                font-weight: 700;
+            }
+            &-cart-empty {
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+
+
+
+
