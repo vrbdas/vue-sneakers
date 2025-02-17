@@ -1,15 +1,12 @@
 <script setup>
-import { useCatalogStore } from '@/stores/catalogStore';
-import { inject, onMounted, onUnmounted, provide, ref, computed } from 'vue';
-import CartEmpty from './сart/CartEmpty.vue';
+import { inject, onMounted, onUnmounted, provide, ref } from 'vue';
 import CartPageOne from './сart/CartPageOne.vue';
 import CartPageTwo from './сart/CartPageTwo.vue';
 import CartPageThree from './сart/CartPageThree.vue';
 
-const catalogStore = useCatalogStore();
 const cartOpen = inject('cartOpen');
-const cartPage = ref(1);
-const cartIsEmpty = computed(() => catalogStore.cart.length == 0);
+const cartPages = ref([CartPageOne, CartPageTwo, CartPageThree]);
+const cartPage = ref(0);
 
 provide('cartPage', cartPage);
 
@@ -30,12 +27,9 @@ function handleEscape() {
 
 <template>
   <div class="cart">
-    <div class="cart__wrapper">
-      <CartEmpty v-if="cartIsEmpty" />
-      <CartPageOne v-if="!cartIsEmpty && cartPage == 1" />
-      <CartPageTwo v-if="!cartIsEmpty && cartPage == 2" />
-      <CartPageThree v-if="!cartIsEmpty && cartPage == 3" />
-    </div>
+    <transition name="fade">
+      <component :is="cartPages[cartPage]"></component>
+    </transition>
   </div>
 </template>
 

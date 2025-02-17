@@ -1,6 +1,6 @@
 <script setup>
 import AppSlider from '@/components/AppSlider.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useCatalogStore } from '@/stores/catalogStore';
 import AppCard from '@/components/AppCard.vue';
 import SearchIcon from '@/icons/SearchIcon.vue';
@@ -9,7 +9,12 @@ const search = ref('');
 const placeholder = ref(true);
 const catalogStore = useCatalogStore();
 const catalogSection = ref();
-const preloadedImgSrcs = ['/src/assets/png/package-icon.png', '/src/assets/png/order-success-icon.png', '/src/assets/png/emoji-1.png', '/src/assets/png/emoji-2.png']; // загружаю картинки в скрытом виде, чтобы при открытии компонента корзины они уже были в кэше. вставил их в конце шаблона
+const preloadedImgSrcs = [
+  '/src/assets/png/package-icon.png',
+  '/src/assets/png/order-success-icon.png',
+  '/src/assets/png/emoji-1.png',
+  '/src/assets/png/emoji-2.png',
+]; // загружаю картинки в скрытом виде, чтобы при открытии компонента корзины они уже были в кэше. вставил их в конце шаблона
 const sliderConfig = {
   height: 400,
 };
@@ -33,22 +38,31 @@ const sliderSlides = ref([
   },
 ]);
 
-function slideBtnClick(id) { // клик по кнопке на любом слайде переходит в каталог. можно  добавить по id слайда переходить в конкретное место каталога
+const catalogFiltered = computed(() => {
+  if (!search.value) return catalogStore.catalog; // не фильтровать если в поиске пусто, для оптимизации. без этой строки тоже будет работать
+  const regex = new RegExp(search.value, 'i'); // поиск фразы без учета регистра
+  return catalogStore.catalog.filter((item) => regex.test(item.title));
+});
+
+const catalogTitle = computed(() => !search.value ? 'Все товары' : `Результаты поиска (${catalogFiltered.value.length} из ${catalogStore.catalog.length})`);
+
+function slideBtnClick(id) {
+  // клик по кнопке на любом слайде переходит в каталог. можно  добавить по id слайда подсвечивать этот товар
   catalogSection.value.scrollIntoView({
     behavior: 'smooth',
   });
 }
-
 </script>
 
 <template>
   <AppSlider :config="sliderConfig" :slides="sliderSlides" @slideBtnClick="slideBtnClick" />
   <section ref="catalogSection" class="catalog">
     <div class="catalog__header">
-      <div class="catalog__title">Все кроссовки</div>
+      <div class="catalog__title">{{ catalogTitle }}</div>
+      
       <label class="catalog__search">
         <input
-          v-model="search"
+          v-model.trim="search"
           @focus="placeholder = false"
           @blur="placeholder = true"
           type="text"
@@ -61,13 +75,11 @@ function slideBtnClick(id) { // клик по кнопке на любом сл�
       </label>
     </div>
     <div v-if="catalogStore.loading" class="loader"></div>
-    <div v-else class="catalog__main">
-      <AppCard
-        v-for="item in catalogStore.catalog"
-        :key="item.id"
-        :item="item"
-        class="catalog__card"
-      />
+    <TransitionGroup appear tag="div" name="fade" class="catalog__main" v-if="!catalogStore.loading && catalogFiltered.length > 0">
+      <AppCard v-for="item in catalogFiltered" :key="item.id" :item="item" class="catalog__card" />
+    </TransitionGroup>
+    <div class="catalog__main" v-if="!catalogStore.loading && catalogFiltered.length == 0">
+      <span class="catalog__search-notfound">Нет товаров</span>
     </div>
   </section>
 

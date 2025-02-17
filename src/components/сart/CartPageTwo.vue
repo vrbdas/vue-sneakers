@@ -33,8 +33,8 @@ const schema = yup.object({
 const { errors, defineField, handleSubmit, resetForm } = useForm({
   validationSchema: schema,
   initialValues: {
-    city: ''
-  }
+    city: '',
+  },
 });
 
 const [name] = defineField('name');
@@ -50,55 +50,66 @@ const onSubmit = handleSubmit((formData) => {
     orderPrice: catalogStore.cartPrice,
   });
   resetForm();
-  cartPage.value = 3;
+  cartPage.value = 2;
+  catalogStore.cart = [];
 });
 </script>
 
 <template>
-  <h2 class="cart__title">
-    <button @click="cartPage = 1" class="btn btn__square btn__square_grey">
-      <div class="arrow-sign-left"></div>
-    </button>
-    Корзина
-  </h2>
-  <form @submit.prevent class="cart__form">
-    <label>
-      Ваше имя
-      <input v-model="name" type="text" placeholder="Введите имя" />
-      <span v-if="errors.name" class="form-error">{{ errors.name }}</span>
-    </label>
-    <label>
-      Ваш телефон
-      <input v-model="phone" v-bind="phoneAttrs" type="text" placeholder="Введите номер телефона" />
-      <span v-if="errors.phone" class="form-error">{{ errors.phone }}</span>
-    </label>
-    <label>
-      Ваш город
-      <select v-model="city" v-bind="cittyAttrs">
-        <option disabled value="Выберите город">Выберите город</option>
-        <optgroup label="Россия">
-          <option v-for="city in citiesRu" :value="city.name" :key="city.id">
-            {{ city.name }}
-          </option>
-        </optgroup>
-        <optgroup label="Казахстан">
-          <option v-for="city in citiesKz" :value="city.name" :key="city.id">
-            {{ city.name }}
-          </option>
-        </optgroup>
-      </select>
-      <span v-if="errors.city" class="form-error">{{ errors.city }}</span>
-    </label>
-    <label>
-      Адрес доставки
-      <textarea v-model="address" v-bind="addressAttrs" rows="4" placeholder="Введите адрес"></textarea>
-      <span v-if="errors.address" class="form-error">{{ errors.address }}</span>
-    </label>
-  </form>
-  <CartPrice />
-  <button @click="onSubmit" class="btn btn__rect">Завершить оформление</button>
+  <div class="cart__wrapper">
+    <h2 class="cart__title">
+      <button @click="cartPage = 0" class="btn btn__square btn__square_grey">
+        <div class="arrow-sign-left"></div>
+      </button>
+      Корзина
+    </h2>
+    <form @submit.prevent class="cart__form">
+      <label>
+        Ваше имя
+        <input v-model="name" type="text" placeholder="Введите имя" />
+        <span v-if="errors.name" class="form-error">{{ errors.name }}</span>
+      </label>
+      <label>
+        Ваш телефон
+        <input
+          v-model="phone"
+          v-bind="phoneAttrs"
+          type="text"
+          placeholder="Введите номер телефона"
+        />
+        <span v-if="errors.phone" class="form-error">{{ errors.phone }}</span>
+      </label>
+      <label>
+        Ваш город
+        <select v-model="city" v-bind="cittyAttrs">
+          <option disabled value="Выберите город">Выберите город</option>
+          <optgroup label="Россия">
+            <option v-for="city in citiesRu" :value="city.name" :key="city.id">
+              {{ city.name }}
+            </option>
+          </optgroup>
+          <optgroup label="Казахстан">
+            <option v-for="city in citiesKz" :value="city.name" :key="city.id">
+              {{ city.name }}
+            </option>
+          </optgroup>
+        </select>
+        <span v-if="errors.city" class="form-error">{{ errors.city }}</span>
+      </label>
+      <label>
+        Адрес доставки
+        <textarea
+          v-model="address"
+          v-bind="addressAttrs"
+          rows="4"
+          placeholder="Введите адрес"
+        ></textarea>
+        <span v-if="errors.address" class="form-error">{{ errors.address }}</span>
+      </label>
+    </form>
+    <CartPrice />
+    <button @click="onSubmit" class="btn btn__rect">Завершить оформление</button>
+  </div>
 </template>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

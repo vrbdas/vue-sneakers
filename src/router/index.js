@@ -22,6 +22,10 @@ const router = createRouter({
       name: 'profile',
       component: ProfileView,
     },
+    {
+      path: '/:pathMatch(.*)*', // несуществующий маршрут
+      redirect: '/',
+    },
   ],
 });
 

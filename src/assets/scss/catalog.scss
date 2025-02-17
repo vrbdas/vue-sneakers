@@ -32,6 +32,9 @@
             left: 20px;
             transform: translate(0, -50%);
         }
+        &-notfound {
+            color: #9B9B9B;
+        }
     }
     &__main {
         width: 100%;

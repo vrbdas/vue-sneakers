@@ -6,6 +6,12 @@ import ArrowLeftIcon from '@/icons/ArrowLeftIcon.vue';
 
 const router = useRouter();
 const catalogStore = useCatalogStore();
+
+// id заказа это date.now()
+function dateFromTimestamp(timestamp) {
+  const date = new Date(timestamp);
+  return date.toLocaleDateString();
+}
 </script>
 
 <template>
@@ -25,14 +31,14 @@ const catalogStore = useCatalogStore();
       >
         <div class="profile__order-title">
           <div>
-            Заказ номер <span>{{ order.orderId }}</span>
+            Заказ номер <span>{{ order.orderId }}</span> от {{ dateFromTimestamp(order.orderId) }}
           </div>
           <div>
             Сумма: <span>{{ order.orderPrice }}</span> ₽
           </div>
         </div>
         <div class="profile__order-list">
-          <div v-for="item in order.orderItems" :key="item.id">
+          <div appear tag="div" name="fade" v-for="item in order.orderItems" :key="item.id">
             <AppCard :item="item" :preview="true" />
             <div class="profile__order-item-info">
               <div><span class="profile__order-item-title">Размер: </span>EU {{ item.size }}</div>
