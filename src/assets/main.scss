@@ -1,12 +1,12 @@
-@import './scss/base.scss';
-@import './scss/header.scss';
-@import './scss/catalog.scss';
-@import './scss/cart.scss';
-@import './scss/footer.scss';
-@import './scss/buttons.scss';
-@import './scss/favorite.scss';
-@import './scss/profile.scss';
-@import './scss/page-empty.scss';
-@import './scss/form.scss';
+@use 'scss/base.scss';
+@use 'scss/header.scss';
+@use 'scss/catalog.scss';
+@use 'scss/cart.scss';
+@use 'scss/footer.scss';
+@use 'scss/buttons.scss';
+@use 'scss/favorite.scss';
+@use 'scss/profile.scss';
+@use 'scss/page-empty.scss';
+@use 'scss/form.scss';
 
-@import './scss/media.scss';
+@use 'scss/media.scss';
