@@ -4,6 +4,8 @@ import { ref, computed } from 'vue';
 import { useCatalogStore } from '@/stores/catalogStore';
 import AppCard from '@/components/AppCard.vue';
 import SearchIcon from '@/icons/SearchIcon.vue';
+import slide1 from '@/assets/png/slide-1.png';
+import slide2 from '@/assets/png/slide-2.png';
 
 const search = ref('');
 const placeholder = ref(true);
@@ -22,7 +24,7 @@ const sliderConfig = {
 const sliderSlides = ref([
   {
     id: 1,
-    imageSrc: '/src/assets/png/slide-1.png',
+    imageSrc: slide1, // импортировал картинки вверху чтобы vite их собирал в build
     imageAlt: 'kermit',
     titleHtml: '<span style="color: #8bb43c">Stan Smith</span>,<br />Forever!',
     btnStyle: '',
@@ -30,7 +32,7 @@ const sliderSlides = ref([
   },
   {
     id: 2,
-    imageSrc: '/src/assets/png/slide-2.png',
+    imageSrc: slide2,
     imageAlt: 'gazelle',
     titleHtml: '<span style="color: #ffffff">GAZELLE</span>',
     btnStyle: 'background-color: #3c4041',
@@ -47,7 +49,7 @@ const catalogFiltered = computed(() => {
 const catalogTitle = computed(() => !search.value ? 'Все товары' : `Результаты поиска (${catalogFiltered.value.length} из ${catalogStore.catalog.length})`);
 
 function slideBtnClick(id) {
-  // клик по кнопке на любом слайде переходит в каталог. можно  добавить по id слайда подсвечивать этот товар
+  // клик по кнопке на любом слайде переходит в каталог. можно добавить по id слайда подсвечивать этот товар
   catalogSection.value.scrollIntoView({
     behavior: 'smooth',
   });

@@ -5,7 +5,7 @@ import ProfileView from '@/views/ProfileView.vue';
 import { useCatalogStore } from '@/stores/catalogStore';
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/sneakers/'), // чтобы маршруты искались не в корне, а в /sneakers/
   routes: [
     {
       path: '/',

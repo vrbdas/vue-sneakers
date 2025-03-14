@@ -55,7 +55,7 @@ const priceOld = computed(() => Math.floor(props.item.price * 1.1 / 100) * 100);
     </button>
     <img
       :class="`card__img ${ispreview}`"
-      :src="`/src/assets/${item.imageUrl}`"
+      :src="item.imageUrl"
       :alt="`sneakers-${item.id}`"
     />
     <p class="card__title">{{ item.title }}</p>
