@@ -65,10 +65,10 @@ function slideBtnClick(id) {
       <label class="catalog__search">
         <input
           v-model.trim="search"
-          @focus="placeholder = false"
-          @blur="placeholder = true"
           type="text"
           class="catalog__search-input"
+          @focus="placeholder = false"
+          @blur="placeholder = true"
         />
         <span v-if="placeholder && !search" class="catalog__search-placeholder">
           <SearchIcon />
@@ -77,10 +77,10 @@ function slideBtnClick(id) {
       </label>
     </div>
     <div v-if="catalogStore.loading" class="loader"></div>
-    <TransitionGroup appear tag="div" name="fade" class="catalog__main" v-if="!catalogStore.loading && catalogFiltered.length > 0">
+    <TransitionGroup v-if="!catalogStore.loading && catalogFiltered.length > 0" appear tag="div" name="fade" class="catalog__main">
       <AppCard v-for="item in catalogFiltered" :key="item.id" :item="item" class="catalog__card" />
     </TransitionGroup>
-    <div class="catalog__main" v-if="!catalogStore.loading && catalogFiltered.length == 0">
+    <div v-if="!catalogStore.loading && catalogFiltered.length == 0" class="catalog__main">
       <span class="catalog__search-notfound">Нет товаров</span>
     </div>
   </section>

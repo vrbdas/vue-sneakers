@@ -15,7 +15,6 @@
     "imageUrl": "https://devartmax.ru/sneakers/catalog/sneakers-2.jpg",
     "price": 15600,
     "sizes": [
-      41,
       42,
       43,
       44,
@@ -54,7 +53,6 @@
     "imageUrl": "https://devartmax.ru/sneakers/catalog/sneakers-5.jpg",
     "price": 9550,
     "sizes": [
-      41,
       42,
       43,
       44,
@@ -122,8 +120,7 @@
       41,
       42,
       43,
-      44,
-      45
+      44
     ],
     "title": "Кроссовки Adidas Ultraboost"
   },

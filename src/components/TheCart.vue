@@ -5,7 +5,7 @@ import CartPageTwo from './сart/CartPageTwo.vue';
 import CartPageThree from './сart/CartPageThree.vue';
 
 const cartOpen = inject('cartOpen');
-const cartPages = ref([CartPageOne, CartPageTwo, CartPageThree]);
+const cartPages = [CartPageOne, CartPageTwo, CartPageThree];
 const cartPage = ref(0);
 
 provide('cartPage', cartPage);

@@ -26,7 +26,7 @@
     }
 
     &__list {
-        overflow: scroll;
+        overflow-y: auto;
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -97,7 +97,7 @@
 
 .cart-empty {
     &__body {
-        overflow: scroll;
+        overflow-y: auto;
         display: flex;
         flex-direction: column;
         gap: 20px;

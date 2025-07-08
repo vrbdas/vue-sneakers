@@ -3,8 +3,8 @@ import { inject, computed } from 'vue';
 import { useCatalogStore } from '@/stores/catalogStore';
 import ArrowRightIcon from '@/icons/ArrowRightIcon.vue';
 import ArrowLeftIcon from '@/icons/ArrowLeftIcon.vue';
-import CartPrice from './CartPrice.vue';
-import AppCard from '../AppCard.vue';
+import CartPrice from '@/components/сart/CartPrice.vue';
+import AppCard from '@/components/AppCard.vue';
 
 const catalogStore = useCatalogStore();
 const cartPage = inject('cartPage');
@@ -24,15 +24,15 @@ const cartIsEmpty = computed(() => catalogStore.cart.length == 0);
           </div>
           <div class="cart__quantity">
             <button
-              @click="catalogStore.quantityDecrease(item.id, item.size)"
               class="btn btn__square btn__square_grey"
+              @click="catalogStore.quantityDecrease(item.id, item.size)"
             >
               -
             </button>
             <div class="cart__quantity-input">{{ item.quantity }}</div>
             <button
-              @click="catalogStore.quantityIncrease(item.id, item.size)"
               class="btn btn__square btn__square_grey"
+              @click="catalogStore.quantityIncrease(item.id, item.size)"
             >
               +
             </button>
@@ -41,7 +41,7 @@ const cartIsEmpty = computed(() => catalogStore.cart.length == 0);
       </div>
     </div>
     <CartPrice />
-    <button @click="cartPage = 1" class="btn btn__rect cart__price-btn">
+    <button class="btn btn__rect cart__price-btn" @click="cartPage = 1">
       Оформить заказ
       <ArrowRightIcon />
     </button>
@@ -52,7 +52,7 @@ const cartIsEmpty = computed(() => catalogStore.cart.length == 0);
       <img class="cart-empty__img" src="/src/assets/png/package-icon.png" alt="package-icon" />
       <div class="cart-empty__subtitle">Корзина пустая</div>
       <p class="cart-empty__text">Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.</p>
-      <button @click="cartOpen = false" class="btn btn__rect cart-empty__btn">
+      <button class="btn btn__rect cart-empty__btn" @click="cartOpen = false">
         Вернуться назад
         <ArrowLeftIcon />
       </button>

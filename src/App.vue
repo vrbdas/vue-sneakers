@@ -1,5 +1,5 @@
 <script setup>
-import { ref, provide } from 'vue';
+import { ref, provide, watch } from 'vue';
 import TheHeader from './components/TheHeader.vue';
 import TheCart from './components/TheCart.vue';
 import TheFooter from './components/TheFooter.vue';
@@ -12,6 +12,20 @@ function overlayClick() {
     cartOpen.value = false;
   }
 }
+
+watch(
+  () => cartOpen.value,
+  (newValue) => {
+    if (newValue) {
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth; // для хрома, вычисляет ширину скроллбара
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = `${scrollbarWidth}px`; // вместо скроллбара добавляет отступ чтобы не окно не дергалось из за изменения ширины
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    }
+  }
+);
 </script>
 
 <template>
@@ -44,12 +58,12 @@ function overlayClick() {
 }
 
 .cart-overlay {
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 10;
-    position: fixed;
-    top: 0;
-    left: 0;
-  }
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
 </style>

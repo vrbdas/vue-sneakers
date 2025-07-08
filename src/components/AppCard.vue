@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useCatalogStore } from '@/stores/catalogStore';
 import { computed } from 'vue';
 import HeartIcon from '@/icons/HeartIcon.vue';
@@ -18,8 +18,6 @@ const props = defineProps({
 });
 const ispreview = computed(() => (props.preview ? 'preview' : ''));
 const select = ref(null);
-const isHighlighted = ref(false);
-const isHighlightedClass = computed(() => (isHighlighted.value ? 'highlighted' : ''));
 const selectOpen = ref(false);
 const itemSize = ref(null);
 const sizesList = computed(() => props.item.sizes.filter((size) => size != itemSize.value));
@@ -27,24 +25,24 @@ const sizesList = computed(() => props.item.sizes.filter((size) => size != itemS
 function cartBtnClick() {
   if (itemSize.value) {
     catalogStore.addToCart(props.item.id, itemSize.value);
-    itemSize.value = null;
-  } else {
-    for (let i = 1; i < 5; i++) {
-      // мигалка - setTimeout с разной задержкой
-      setTimeout(() => (isHighlighted.value = !isHighlighted.value), i * 100);
-    }
   }
 }
 
-const priceOld = computed(() => Math.floor(props.item.price * 1.1 / 100) * 100);
+onMounted(() => {
+  if (props.item?.sizes?.length) {
+    itemSize.value = props.item.sizes[0];
+  }
+});
+
+const priceOld = computed(() => Math.floor((props.item.price * 1.1) / 100) * 100);
 </script>
 
 <template>
   <div :class="`card ${ispreview}`" @mouseleave="selectOpen = false">
     <button
       v-if="!preview"
-      @click="catalogStore.switchFavorite(item.id)"
       class="btn btn__square card__like"
+      @click="catalogStore.switchFavorite(item.id)"
     >
       <HeartIcon
         width="24"
@@ -53,27 +51,22 @@ const priceOld = computed(() => Math.floor(props.item.price * 1.1 / 100) * 100);
         :strokeColor="catalogStore.favoriteIds.includes(item.id) ? '#FF8585' : '#9B9B9B'"
       />
     </button>
-    <img
-      :class="`card__img ${ispreview}`"
-      :src="item.imageUrl"
-      :alt="`sneakers-${item.id}`"
-    />
+    <img :class="`card__img ${ispreview}`" :src="item.imageUrl" :alt="`sneakers-${item.id}`" />
     <p class="card__title">{{ item.title }}</p>
     <div v-if="!preview" class="card__size">
       <span class="card__size-title">Размер:</span>
       <div
-        @click.stop="selectOpen = !selectOpen"
         class="card__size-wrapper"
-        :class="isHighlightedClass"
+        @click.stop="selectOpen = !selectOpen"
       >
         <span>{{ itemSize ? `EU ${itemSize}` : '' }}</span>
         <Transition name="fade">
-          <div ref="select" v-if="selectOpen" class="card__size-select">
+          <div v-if="selectOpen" ref="select" class="card__size-select">
             <div
               v-for="size in sizesList"
               :key="size"
-              @click="itemSize = size"
               class="card__size-select-item"
+              @click="itemSize = size"
             >
               EU {{ size }}
             </div>
@@ -86,7 +79,7 @@ const priceOld = computed(() => Math.floor(props.item.price * 1.1 / 100) * 100);
         <span v-if="!ispreview" class="card__price_old">{{ priceOld }} ₽</span>
         <span class="card__price_current">{{ item.price }} ₽</span>
       </div>
-      <button v-if="!preview" @click="cartBtnClick" class="btn btn__square btn__square_green">
+      <button v-if="!preview" class="btn btn__square btn__square_green" @click="cartBtnClick">
         <CartIcon color="#ffffff" />
       </button>
     </div>

@@ -1,6 +1,6 @@
 <script setup>
 import { inject } from 'vue';
-import CartPrice from './CartPrice.vue';
+import CartPrice from '@/components/сart/CartPrice.vue';
 import * as yup from 'yup';
 import { useForm } from 'vee-validate';
 import { citiesRu, citiesKz } from '@/data/cities';
@@ -58,12 +58,12 @@ const onSubmit = handleSubmit((formData) => {
 <template>
   <div class="cart__wrapper">
     <h2 class="cart__title">
-      <button @click="cartPage = 0" class="btn btn__square btn__square_grey">
+      <button class="btn btn__square btn__square_grey" @click="cartPage = 0">
         <div class="arrow-sign-left"></div>
       </button>
       Корзина
     </h2>
-    <form @submit.prevent class="cart__form">
+    <form class="cart__form" @submit.prevent>
       <label>
         Ваше имя
         <input v-model="name" type="text" placeholder="Введите имя" />
@@ -84,12 +84,12 @@ const onSubmit = handleSubmit((formData) => {
         <select v-model="city" v-bind="cittyAttrs">
           <option disabled value="Выберите город">Выберите город</option>
           <optgroup label="Россия">
-            <option v-for="city in citiesRu" :value="city.name" :key="city.id">
+            <option v-for="city in citiesRu" :key="city.id" :value="city.name">
               {{ city.name }}
             </option>
           </optgroup>
           <optgroup label="Казахстан">
-            <option v-for="city in citiesKz" :value="city.name" :key="city.id">
+            <option v-for="city in citiesKz" :key="city.id" :value="city.name">
               {{ city.name }}
             </option>
           </optgroup>
@@ -108,7 +108,7 @@ const onSubmit = handleSubmit((formData) => {
       </label>
     </form>
     <CartPrice />
-    <button @click="onSubmit" class="btn btn__rect">Завершить оформление</button>
+    <button class="btn btn__rect" @click="onSubmit">Завершить оформление</button>
   </div>
 </template>
 
